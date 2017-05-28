@@ -37,23 +37,10 @@ public class NewsActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<List<News>> {
 
     private static final String LOG_TAG = NewsActivity.class.getName();
-
     private static final int NEWS_LOADER_ID = 1;
-
-    // private ArrayList<Earthquake> earthquakes;
-
     private NewsAdapter adapter ;
-
     private TextView emptyStateTextView;
-
-    /**
-     * URL
-     */
-  //  private static final String GUARDIAN_REQUEST_URL = "http://content.guardianapis.com/search?q=football&api-key=ae36c787-6ed0-4b5e-92e6-e24456a0b988";
-      private static final String GUARDIAN_REQUEST_URL = "http://content.guardianapis.com/search?q=football&api-key=ae36c787-6ed0-4b5e-92e6-e24456a0b988";
-
-
-
+    private static final String GUARDIAN_REQUEST_URL = "http://content.guardianapis.com/search?q=football&api-key=ae36c787-6ed0-4b5e-92e6-e24456a0b988";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,49 +101,26 @@ public class NewsActivity extends AppCompatActivity
 
     @Override
     public Loader<List<News>> onCreateLoader(int i, Bundle bundle) {
-/**
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String minMagnitude = sharedPrefs.getString(
-                getString(R.string.settings_min_magnitude_key),
-                getString(R.string.settings_min_magnitude_default));
-
-        String orderBy = sharedPrefs.getString(
-                getString(R.string.settings_order_by_key),
-                getString(R.string.settings_order_by_default)
-        );
-
-        */
-
-/*
-        Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
-        Uri.Builder uriBuilder = baseUri.buildUpon();
-
-        uriBuilder.appendQueryParameter("format", "geojson");
-        uriBuilder.appendQueryParameter("limit", "10");
-        uriBuilder.appendQueryParameter("minmag", minMagnitude);
-        uriBuilder.appendQueryParameter("orderby", orderBy);
-*/
         return new NewsLoader(this, GUARDIAN_REQUEST_URL);
     }
 
     @Override
-    public void onLoadFinished(Loader<List<News>> loader, List<News> earthquakes) {
+    public void onLoadFinished(Loader<List<News>> loader, List<News> news) {
 
         // Hide loading indicator because the data has been loaded
         View loadingIndicator = findViewById(R.id.loading_indicator);
         loadingIndicator.setVisibility(View.GONE);
 
-        // Set empty state text to display "No earthquakes found."
+        // Set empty state text to display "No news found."
         emptyStateTextView.setText(R.string.no_news);
-
-        // Clear the adapter of previous earthquake data
+        // Clear the adapter of previous news data
         adapter.clear();
 
 
         // If there is a valid list of {@link Earthquake}s, then add them to the adapter's
         // data set. This will trigger the ListView to update.
-        if (earthquakes != null && !earthquakes.isEmpty()) {
-            adapter.addAll(earthquakes);
+        if (news != null && !news.isEmpty()) {
+            adapter.addAll(news);
         }
     }
 

@@ -19,6 +19,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class NewsAdapter extends ArrayAdapter<News> {
 
     private List<News> news;
@@ -59,7 +63,6 @@ public class NewsAdapter extends ArrayAdapter<News> {
         viewHolder.titleTextView.setText(title);
         viewHolder.dateTextView.setText(date);
 
-
         //Set the on click listener to show the page related to the new the user click in the browser
         viewHolder.rootLayOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,30 +74,19 @@ public class NewsAdapter extends ArrayAdapter<News> {
                 context.startActivity(intent);
             }
         });
-
-
         return convertView;
     }
 
-
     static class NewsViewHolder {
+        @BindView(R.id.section) TextView sectionTextView;
+        @BindView(R.id.title) TextView titleTextView;
+        @BindView(R.id.date) TextView dateTextView;
+        @BindView(R.id.root_layout) LinearLayout rootLayOut;
 
-        private TextView sectionTextView;
-        private TextView titleTextView;
-        private TextView dateTextView;
-        private LinearLayout rootLayOut;
-
-
-        public NewsViewHolder(@NonNull View view) {
-            this.sectionTextView = (TextView) view.findViewById(R.id.section);
-            this.titleTextView = (TextView) view.findViewById(R.id.title);
-            this.dateTextView = (TextView) view.findViewById(R.id.date);
-            this.rootLayOut = (LinearLayout)view.findViewById(R.id.root_layout);
+        public NewsViewHolder(View view) {
+            ButterKnife.bind(this, view);
         }
-
     }
-
-
 }
 
 
